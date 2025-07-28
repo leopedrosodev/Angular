@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="header">
+    <h1>Gerenciamento de Produtos</h1>
+    <button class="btn btn-primary" (click)="novoProduto()">
+      Novo Produto
+    </button>
+  </div>
+
+  <div class="search-section">
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="termoBusca"
+        (keyup.enter)="buscarProdutos()"
+        placeholder="Buscar produtos por nome..."
+        class="search-input">
+      <button class="btn btn-secondary" (click)="buscarProdutos()">
+        Buscar
+      </button>
+      <button class="btn btn-outline" (click)="carregarProdutos()">
+        Limpar
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="erro" class="alert alert-error">
+    {{ erro }}
+  </div>
+
+  <div *ngIf="carregando" class="loading">
+    Carregando produtos...
+  </div>
+
+  <div *ngIf="!carregando && produtosFiltrados.length === 0 && !erro" class="empty-state">
+    <p>Nenhum produto encontrado.</p>
+  </div>
+
+  <div *ngIf="!carregando && produtosFiltrados.length > 0" class="produtos-grid">
+    <div *ngFor="let produto of produtosFiltrados" class="produto-card">
+      <div class="produto-header">
+        <h3>{{ produto.nome }}</h3>
+        <span class="produto-preco">{{ formatarPreco(produto.preco) }}</span>
+      </div>
+
+      <div class="produto-body">
+        <p class="produto-descricao">{{ produto.descricao }}</p>
+      </div>
+
+      <div class="produto-actions">
+        <button class="btn btn-sm btn-primary" (click)="editarProduto(produto.id!)">
+          Editar
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="deletarProduto(produto.id!, produto.nome)">
+          Excluir
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
