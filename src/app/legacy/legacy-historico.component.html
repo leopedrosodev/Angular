@@ -1,0 +1,13 @@
+<section class="legacy">
+  <h2>Legacy (NgModule)</h2>
+  <p>
+    Esta rota é carregada via <strong>Lazy Loading</strong> com NgModule tradicional para demonstrar compatibilidade.
+  </p>
+
+  <ul>
+    <li *ngFor="let item of historico$ | async">
+      <span>{{ item.placa | placa }}</span>
+      <small>({{ item.consultadoEm | tempoRelativo }} atrás)</small>
+    </li>
+  </ul>
+</section>

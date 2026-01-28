@@ -1,0 +1,44 @@
+<section class="sobre">
+  <h2>Referências aplicadas</h2>
+  <p>
+    Esta página resume os fundamentos de Angular usados no projeto para facilitar a apresentação em entrevistas.
+  </p>
+
+  <div class="blocos">
+    <div>
+      <h3>NgModule x Standalone</h3>
+      <p>
+        A aplicação principal usa componentes standalone. O menu "Legado" carrega um módulo clássico via Lazy Loading.
+      </p>
+    </div>
+    <div>
+      <h3>RxJS e Assíncrono</h3>
+      <p>
+        O formulário usa <strong>switchMap</strong> para cancelar requisições anteriores. A seção de demo mostra
+        mergeMap, concatMap e exhaustMap.
+      </p>
+    </div>
+    <div>
+      <h3>Pipes e Forms</h3>
+      <p>
+        Há pipes puros (formatação de placa, filtro) e impuro (tempo relativo). A busca usa Reactive Forms e
+        o bloco de observações usa Template-driven Forms.
+      </p>
+    </div>
+    <div>
+      <h3>Performance e ciclo de vida</h3>
+      <p>
+        Change Detection com OnPush, Async Pipe e Lazy Loading. O resultado usa ngOnChanges e o componente principal
+        usa ngOnInit.
+      </p>
+    </div>
+    <div>
+      <h3>Testes Unitários</h3>
+      <p>
+        Specs cobrem Service e Pipes com Jasmine + Karma e TestBed para demonstrar boas práticas.
+      </p>
+    </div>
+  </div>
+
+  <a routerLink="/" class="voltar">Voltar para a busca</a>
+</section>

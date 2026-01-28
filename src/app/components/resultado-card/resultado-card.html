@@ -1,0 +1,51 @@
+<div class="resultado-card" [class.is-loading]="estado === 'carregando'" [class.is-error]="estado === 'erro'">
+  <header class="resultado-header">
+    <span class="chip" [class.ok]="estado === 'sucesso'" [class.warn]="estado === 'erro'">
+      {{ estado | titlecase }}
+    </span>
+    <small class="muted">Atualizado em {{ ultimaAtualizacao | date: 'shortTime' }}</small>
+  </header>
+
+  <div class="resultado-body" *ngIf="resultado; else semResultado">
+    <h3>{{ resultado.carro.marca }} {{ resultado.carro.modelo }}</h3>
+    <p class="placa">{{ resultado.carro.placa | placa }}</p>
+
+    <dl class="grid">
+      <div>
+        <dt>Ano</dt>
+        <dd>{{ resultado.carro.ano }}</dd>
+      </div>
+      <div>
+        <dt>Cor</dt>
+        <dd>{{ resultado.carro.cor }}</dd>
+      </div>
+      <div>
+        <dt>Município</dt>
+        <dd>{{ resultado.carro.municipio }}/{{ resultado.carro.uf }}</dd>
+      </div>
+      <div>
+        <dt>Origem</dt>
+        <dd>{{ resultado.origem }}</dd>
+      </div>
+    </dl>
+
+    <div class="restricoes" *ngIf="resultado.carro.restricoes.length; else semRestricoes">
+      <h4>Restrições</h4>
+      <ul>
+        <li *ngFor="let restricao of resultado.carro.restricoes">{{ restricao }}</li>
+      </ul>
+    </div>
+
+    <ng-template #semRestricoes>
+      <p class="muted">Sem restrições cadastradas.</p>
+    </ng-template>
+  </div>
+
+  <ng-template #semResultado>
+    <div class="placeholder">
+      <p *ngIf="estado === 'carregando'">Consultando base local...</p>
+      <p *ngIf="estado === 'idle'">Informe uma placa para iniciar a busca.</p>
+      <p *ngIf="estado === 'erro'">Não foi possível concluir a consulta.</p>
+    </div>
+  </ng-template>
+</div>

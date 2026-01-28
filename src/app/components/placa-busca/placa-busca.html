@@ -1,0 +1,111 @@
+<section class="hero">
+  <div>
+    <p class="eyebrow">Consulta inteligente</p>
+    <h2>Pesquisa de carros por placa</h2>
+    <p class="subtitle">
+      Projeto Angular moderno, com standalones, RxJS reativo e boas práticas para entrevistas.
+    </p>
+  </div>
+
+  <form class="busca-form" [formGroup]="buscaForm" (ngSubmit)="submeterConsulta()">
+    <label for="placa">Placa</label>
+    <div class="input-row">
+      <input
+        id="placa"
+        type="text"
+        formControlName="placa"
+        placeholder="ABC-1234 ou BRA1E23"
+        autocomplete="off"
+      />
+      <button type="submit" [disabled]="buscaForm.invalid">Consultar</button>
+    </div>
+    <small class="hint" *ngIf="placaControl.invalid && placaControl.touched">
+      Placa inválida. Use o padrão ABC-1234 ou ABC1D23.
+    </small>
+  </form>
+</section>
+
+<section class="grid-layout">
+  <div class="card">
+    <h3>Resultado da consulta</h3>
+    <ng-container *ngIf="consulta$ | async as vm">
+      <app-resultado-card [estado]="vm.estado" [resultado]="vm.resultado"></app-resultado-card>
+      <p class="erro" *ngIf="vm.estado === 'erro'">{{ vm.erro }}</p>
+    </ng-container>
+  </div>
+
+  <div class="card">
+    <h3>Histórico compartilhado (Service)</h3>
+    <span class="sr-only" aria-hidden="true">{{ tick$ | async }}</span>
+    <div class="input-row">
+      <input
+        type="text"
+        placeholder="Filtrar histórico"
+        [(ngModel)]="filtroHistorico"
+        [ngModelOptions]="{ standalone: true }"
+      />
+      <button type="button" class="ghost" (click)="limparHistorico()">Limpar</button>
+    </div>
+
+    <ul class="historico">
+      <li *ngFor="let item of (historico$ | async) | historicoFiltro: filtroHistorico">
+        <div>
+          <strong>{{ item.placa | placa }}</strong>
+          <span class="badge" [class.bad]="!item.sucesso">
+            {{ item.sucesso ? 'OK' : 'Erro' }}
+          </span>
+        </div>
+        <small>
+          {{ item.consultadoEm | tempoRelativo }} atrás · {{ item.sucesso ? 'Consulta concluída' : item.mensagem }}
+        </small>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="grid-layout">
+  <div class="card">
+    <h3>Template-driven form (simples)</h3>
+    <p class="muted">Exemplo simples com ngModel para registrar uma observação.</p>
+    <form #notaForm="ngForm" (ngSubmit)="registrarNota()" class="nota-form">
+      <input
+        type="text"
+        name="nome"
+        [(ngModel)]="nota.nome"
+        required
+        minlength="2"
+        placeholder="Seu nome"
+      />
+      <textarea
+        name="comentario"
+        [(ngModel)]="nota.comentario"
+        rows="3"
+        placeholder="Observações sobre a pesquisa"
+      ></textarea>
+      <button type="submit" [disabled]="notaForm.invalid">Salvar observação</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3>Demo RxJS: switch/merge/concat/exhaust</h3>
+    <p class="muted">Clique para simular três consultas quase simultâneas.</p>
+    <div class="demo-buttons">
+      <button type="button" class="ghost" (click)="rodarDemo('switchMap')">switchMap</button>
+      <button type="button" class="ghost" (click)="rodarDemo('mergeMap')">mergeMap</button>
+      <button type="button" class="ghost" (click)="rodarDemo('concatMap')">concatMap</button>
+      <button type="button" class="ghost" (click)="rodarDemo('exhaustMap')">exhaustMap</button>
+    </div>
+
+    <div *ngIf="demoResultados$ | async as demos">
+      <ul class="demo-list" *ngIf="demos; else demoVazio">
+        <li *ngFor="let demo of demos">
+          <strong>{{ demo.operador }}</strong> · {{ demo.placa | placa }} →
+          <span [class.bad]="!demo.ok">{{ demo.mensagem }}</span>
+        </li>
+      </ul>
+      <ng-template #demoVazio>
+        <p class="muted">Nenhuma simulação executada.</p>
+      </ng-template>
+    </div>
+  </div>
+</section>

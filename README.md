@@ -1,76 +1,42 @@
-Frontend - Interface Angular
+Frontend - Pesquisa de Carros por Placa
 
-📋 Visão Geral
+Visao Geral
 
-Este é o frontend do sistema de gerenciamento de produtos, desenvolvido com Angular. Fornece uma interface moderna e responsiva para interagir com a API REST.
+Aplicacao Angular demonstrativa para pesquisa de carros por placa. O objetivo e apresentar fundamentos do framework, RxJS e boas praticas em uma interface funcional, ideal para entrevistas.
 
-🏗️ Arquitetura
-
-Estrutura de Componentes
-
-Plain Text
-
+Arquitetura
 
 src/app/
-├── app.ts                     # Componente principal
-├── app.config.ts             # Configurações da aplicação
-├── app.routes.ts             # Roteamento
+├── app.ts
+├── app.config.ts
+├── app.routes.ts
 ├── components/
-│   ├── produto-lista/        # Listagem de produtos
-│   │   ├── produto-lista.ts
-│   │   ├── produto-lista.html
-│   │   └── produto-lista.css
-│   └── produto-form/         # Formulário de produtos
-│       ├── produto-form.ts
-│       ├── produto-form.html
-│       └── produto-form.css
+│   ├── placa-busca/          # Fluxo principal (Reactive Forms + RxJS)
+│   ├── resultado-card/       # Card do resultado (ngOnChanges)
+│   └── sobre/                # Referencias usadas
+├── legacy/                   # Exemplo com NgModule + Lazy Loading
+├── models/
+│   └── carro.model.ts
+├── pipes/                    # Pipes puros e impuros
 ├── services/
-│   └── produto.ts            # Serviço HTTP
-└── models/
-    └── produto.model.ts      # Interface TypeScript
+│   └── carro.service.ts      # Regras de negocio e historico
+└── utils/
+    └── placa.ts
 
+Fundamentos Demonstrados
 
-🔧 Tecnologias
+- Angular moderno com componentes standalone
+- NgModule legado com Lazy Loading
+- RxJS com switchMap, mergeMap, concatMap e exhaustMap
+- Async Pipe para subscribe/unsubscribe automatico
+- Pipes puros e impuros
+- Template-driven Forms e Reactive Forms
+- Change Detection com OnPush
+- Testes unitarios com Jasmine + Karma
 
-•
-Angular 18
+Como Executar
 
-•
-TypeScript
-
-•
-RxJS
-
-•
-CSS3
-
-•
-Node.js & npm
-
-🚀 Como Executar
-
-Pré-requisitos
-
-•
-Node.js 18+
-
-•
-npm 9+
-
-Comandos
-
-Bash
-
-
-# Instalar dependências
 npm install
-
-# Executar em modo desenvolvimento
 npm start
 
-# Ou usar Angular CLI diretamente
-ng serve
-
-
-A aplicação estará disponível em: http://localhost:4200/
-
+A aplicacao estara em http://localhost:4200/
